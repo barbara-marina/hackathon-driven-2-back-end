@@ -1,4 +1,4 @@
-import db from "../db.js";
+import { getUser, getSession } from "../database/actions.js";
 
 export default async function validateToken(req, res, next) {
     const authorization = req.headers.authorization;
@@ -7,10 +7,10 @@ export default async function validateToken(req, res, next) {
     if (!token) return res.status(401).send("Token not received.");
 
     try {
-        const session = await db.collection("Sessions").findOne({token});
+        const session = await getSession({token});
         if (!session) return res.status(401).send("This session does not exist.");
 
-        const user = await db.collection("Users").findOne({_id: session.userId});
+        const user = await getUser({_id: session.userId});
         if (!user) return res.status(401).send("This user does not exist");
 
         res.locals.user = user;
