@@ -1,15 +1,15 @@
-import db from "../db.js";
 import bcrypt from "bcrypt";
-import {v4 as uuid} from "uuid";
+import { v4 as uuid } from "uuid";
+import { setUser, getUser, setSession, deleteSession } from "../database/actions.js";
 
 export async function signUp(req, res) {
     const user = req.body;
     
     try{
         const hash = bcrypt.hashSync(user.password, 10);
-        await db.collection("Users").insertOne({...user, password: hash});
+        await setUser({...user, password: hash});
         
-        const userData = await db.collection("Users").findOne({email: user.email});
+        const userData = await getUser({email: user.email});
         if (!userData) return res.sendStatus(401);
         
         res.status(202).send("New user created successfully.");
@@ -24,12 +24,12 @@ export async function signIn(req, res) {
     const user = req.body;
 
     try {
-        const userData = await db.collection("Users").findOne({email: user.email});
+        const userData = await getUser({email: user.email});
 
         if (userData && bcrypt.compareSync(user.password, userData.password)) {
             const token = uuid();
             
-            await db.collection("Sessions").insertOne({token, userId: userData._id});
+            await setSession({token, userId: userData._id});
             
             return res.send(token);
         }
@@ -47,7 +47,7 @@ export async function logOut(req, res) {
     const token = authorization?.replace("Bearer ", "").trim();
 
     try {
-        await db.collection("Sessions").deleteOne({token});
+        await deleteSession({token});
 
         res.sendStatus(200);
     } catch(e) {

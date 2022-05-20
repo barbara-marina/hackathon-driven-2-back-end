@@ -7,7 +7,7 @@ export const Users = mongoose.model('users', {
     picture: String
 });
 
-export const Sections = mongoose.model('sessions', {
+export const Sessions = mongoose.model('sessions', {
     userId: String,
     token: String
 });
