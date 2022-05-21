@@ -33,14 +33,6 @@ export const deleteSession = async (identifier) => {
     }
     return false;
 }
-/*
-export const setQuestions = async (body) => {
-    const insertion = await Questions.create(body);
-    if(insertion){
-        return true;
-    }
-    return false;
-}*/
 
 export const getQuestions = async () => {
     const questions = await Questions.find({}).exec();
