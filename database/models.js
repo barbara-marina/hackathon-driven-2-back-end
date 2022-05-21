@@ -15,6 +15,6 @@ export const Sessions = mongoose.model('sessions', {
 
 export const Questions = mongoose.model('questions', {
     name: String,
-    options: Array,
+    options: Object,
     assigned: Boolean
 });
