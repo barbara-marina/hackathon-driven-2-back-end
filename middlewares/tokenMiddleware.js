@@ -12,6 +12,8 @@ export default async function validateToken(req, res, next) {
 
         const user = await getUser({_id: session.userId});
         if (!user) return res.status(401).send("This user does not exist");
+        
+        delete user.password;
 
         res.locals.user = user;
     } catch(e) {
