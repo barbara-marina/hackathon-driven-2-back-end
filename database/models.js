@@ -4,7 +4,7 @@ export const Users = mongoose.model('users', {
     name: String,
     email: String,
     password: String,
-    picture: String, 
+    picture: String,
     progress: Object
 });
 

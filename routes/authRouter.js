@@ -5,8 +5,7 @@ import validateSignIn from "./../middlewares/signInMiddleware.js";
 import validateSignUp from "./../middlewares/signUpMiddleware.js";
 
 const authRouter = Router();
-
-authRouter.post("/sign-up", validateSignUp,signUp);
+authRouter.post("/sign-up", validateSignUp, signUp);
 authRouter.post("/sign-in", validateSignIn, signIn);
 authRouter.delete("/log-out", validateToken, logOut)
 
