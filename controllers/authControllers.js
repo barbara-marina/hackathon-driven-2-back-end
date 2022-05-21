@@ -4,7 +4,6 @@ import { setUser, getUser, setSession, deleteSession } from "../database/actions
 
 export async function signUp(req, res) {
     const user = req.body;
-    
     try{
         const hash = bcrypt.hashSync(user.password, 10);
         await setUser({...user, password: hash});
